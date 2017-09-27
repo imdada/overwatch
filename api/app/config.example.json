@@ -1,0 +1,60 @@
+{
+
+    // ** json should not contain comments **
+    // this file is merely a document
+
+    // to use alternative configs,
+    // when you have config.prod.json,
+    // run:
+    // config=prod npm start
+
+    "https": {
+        "enabled": false,
+        "key": "",
+        "cert": ""
+    },
+    "port": 3000,
+
+    "socket": {
+      "path": "/socket"
+    },
+
+    // domain name
+    "corsDomain": "http://localhost:4200",
+
+    // see README.md#Submiting Statistics for detail
+    // options: [ socket | redis ]
+    "messaging": "socket",
+
+    // see http://docs.sequelizejs.com/manual/installation/getting-started.html#setting-up-a-connection
+    "db": {
+        "uri": "mysql://user:pass@127.0.0.1:3306/overwatch",
+        "pool": {
+            "max": 5,
+            "min": 0,
+            "idle": 10000
+        },
+        // SQLite only
+        "storage": "path/to/database.sqlite"
+    },
+
+    // if "redis" is set for "messaging"
+    // then you have to config this
+    "redis": {
+        "host": "127.0.0.1",
+        "port": 6379
+    },
+
+    // see https://github.com/nomiddlename/log4js-node
+    "log": {
+        "appenders": {
+            "file": {
+                "type": "dateFile",
+                "filename": "/data/log/overwatch/overwatch.log",
+                "pattern": "-yyyy-MM-dd",
+                "alwaysIncludePattern": false
+            }
+        },
+        "categories": { "default": { "appenders": ["file"], "level": "info" } }
+    }
+}

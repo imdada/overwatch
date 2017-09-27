@@ -1,0 +1,81 @@
+:host {
+  overflow-y: auto;
+}
+
+.main {
+
+  margin: auto;
+  width: 100%;
+  max-width: 1000px;
+
+  form {
+    margin-top: 5em;
+    text-align: center;
+    font-size: 1em;
+  }
+
+  .chart {
+
+    $chart-height: 400px;
+
+    height: $chart-height;
+    box-shadow: 0 0 10px #666;
+
+    ow-chart-rq-t {
+      height: $chart-height;
+    }
+
+    md-spinner {
+      margin: auto;
+      height: $chart-height;
+    }
+
+    &>div {
+      text-align: center;
+      line-height: $chart-height;
+    }
+
+  }
+
+  .failure-log {
+
+    margin-top: 5em;
+
+    h1 {
+      text-align: center;
+      font-size: 1.5em;
+    }
+
+    .table-wrapper {
+
+        overflow-x: auto;
+        text-align: center;
+        margin-bottom: 5em;
+
+        table {
+          width: 100%;
+          text-align: left;
+          font-size: 1em;
+          font-family: monospace;
+
+          thead {
+            color: #888;
+            line-height: 1.5em;
+          }
+
+          td, th {
+            padding: .2em .5em;
+            white-space: nowrap;
+          }
+
+          td { color: #ddd; }
+          td.status { color: #d44; }
+          td.time { color: #888; }
+
+        }
+
+      }
+
+  }
+
+}

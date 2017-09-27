@@ -1,0 +1,29 @@
+{
+    "https": {
+        "enabled": false,
+        "key": "",
+        "cert": ""
+    },
+    "port": 3000,
+    "socket": {
+      "path": "/socket"
+    },
+    "corsDomain": "http://localhost:4200",
+    "messaging": "socket",
+    "db": {
+        "uri": "mysql://root@127.0.0.1:3306/overwatch",
+        "pool": {
+            "max": 5,
+            "min": 0,
+            "idle": 10000
+        }
+    },
+    "redis": {
+        "host": "127.0.0.1",
+        "port": 6379
+    },
+    "log": {
+        "appenders": { "out": { "type": "stdout" } },
+        "categories": { "default": { "appenders": ["out"], "level": "debug" } }
+    }
+}

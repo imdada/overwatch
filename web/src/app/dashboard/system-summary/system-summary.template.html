@@ -1,0 +1,11 @@
+<h1 class="title">System Summary</h1>
+<hr>
+<div class="summary-wrapper">
+  <div class="system-go" *ngIf="systemSummaryItems !== null && systemSummaryItems.length === 0">
+    All Systems GO
+  </div>
+  <div class="summary-item" *ngFor="let summary of systemSummaryItems || []" (click)="onSystemSelected(summary.system)">
+    <div class="system">{{ summary.system }}</div>
+    <div class="summary">{{ summary.summary }}</div>
+  </div>
+</div>

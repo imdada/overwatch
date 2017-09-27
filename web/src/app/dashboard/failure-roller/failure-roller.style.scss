@@ -1,0 +1,42 @@
+.title {
+  margin-bottom: 0;
+  font-weight: 100;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.log-row {
+
+  overflow: hidden;
+  line-height: 1.5em;
+  cursor: pointer;
+
+  &:hover { background-color: rgba(255, 255, 255, 0.3); }
+  &> div {
+    overflow: hidden;
+    float: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .date { width: 2.5em; }
+  .system { width: 5em; }
+  .status {
+    width: 10em;
+    padding: 0 .5em;
+    color: #f44;
+    font-weight: bold;
+  }
+  .count {
+    width: 2.5em;
+    text-align: right;
+    padding-right: .5em;
+    color: #f70;
+  }
+
+}

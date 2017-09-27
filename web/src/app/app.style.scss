@@ -1,0 +1,18 @@
+.toolbar {
+  position: fixed;
+  height: 3em;
+  width: 100%;
+  z-index: 100;
+}
+
+.content {
+
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+
+  router-outlet {
+    display: none;
+  }
+
+}

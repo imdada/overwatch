@@ -1,0 +1,30 @@
+<div class="ops-wrapper">
+
+  <div>
+    <md-select placeholder="Layout" [(ngModel)]="selectedLayout" name="layout" [formControl]="layoutInputCtrl">
+      <md-option *ngFor="let layout of layouts; trackBy: layout?.name" [value]="layout">
+        {{ layout.name }}
+      </md-option>
+      <md-option value="null">&lt;New&gt;</md-option>
+    </md-select>
+  </div>
+
+  <div>
+    <md-input-container>
+      <input mdInput placeholder="System" name="system" [(ngModel)]="newSystem" (keyup.enter)="addNode()">
+    </md-input-container>
+    <button md-button [disabled]="newSystem.trim().length === 0" (click)="addNode()">Add</button>
+    <button md-button [disabled]="boxes.size >= 10" (click)="addBox()">Add Box</button>
+  </div>
+
+  <div>
+    <button md-raised-button (click)="save()">Save</button>
+    <button md-raised-button (click)="delete()">Delete</button>
+  </div>
+
+</div>
+
+<ow-layout-editor #editor
+  [data]="currentLayout"
+  (nodeRemoved)="removeNode($event)"
+  (boxRemoved)="removeBox($event)"></ow-layout-editor>

@@ -1,0 +1,75 @@
+<div class="main">
+  <form action="javascript: void(0)">
+
+    <md-form-field>
+      <input mdInput placeholder="System" name="system"
+        [mdAutocomplete]="auto"
+        [formControl]="systemInputCtrl"
+        [(ngModel)]="chartOpt.system">
+    </md-form-field>
+    <md-autocomplete #auto="mdAutocomplete">
+      <md-option *ngFor="let system of filteredSystems" [value]="system">
+        {{ system }}
+      </md-option>
+    </md-autocomplete>
+
+    <md-form-field>
+      <input mdInput placeholder="Begin" name="begin"
+        [mdDatepicker]="beginDatepicker"
+        [value]="chartOpt.begin"
+        (dateChange)="beginDateChanged($event)">
+      <md-datepicker-toggle mdSuffix [for]="beginDatepicker"></md-datepicker-toggle>
+      <md-datepicker #beginDatepicker [startAt]="chartOpt.begin"></md-datepicker>
+    </md-form-field>
+
+    <md-form-field>
+      <input mdInput placeholder="End" name="end"
+        [mdDatepicker]="endDatepicker"
+        [value]="chartOpt.end"
+        (dateChange)="endDateChanged($event)">
+      <md-datepicker-toggle mdSuffix [for]="endDatepicker"></md-datepicker-toggle>
+      <md-datepicker #endDatepicker [startAt]="chartOpt.end"></md-datepicker>
+    </md-form-field>
+
+    <button md-raised-button (click)="go()" [disabled]="chartOpt.system.trim().length == 0">GO</button>
+
+  </form>
+
+  <div class="chart">
+    <ow-chart-rq-t #chart [data]="chartData" *ngIf="chartState === 'shown'"></ow-chart-rq-t>
+    <div *ngIf="chartState === null">
+      Select system &amp; time
+    </div>
+    <div *ngIf="chartState === 'loading'">
+      <md-spinner></md-spinner>
+    </div>
+    <div *ngIf="chartState === 'noData'">
+      No Data
+    </div>
+  </div>
+
+  <div class="failure-log">
+    <h1>Failure Log</h1>
+    <div class="table-wrapper">
+      <table *ngIf="failureLogs.length > 0">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Host</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let logItem of failureLogs">
+            <td class="time">{{ logItem.time | timestamp: 'time' }}</td>
+            <td class="status">{{ logItem.status }}</td>
+            <td>{{ logItem.host }}</td>
+            <td>{{ logItem.url }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <span *ngIf="failureLogs.length === 0">No Data</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+:host {
+  position: relative;
+  flex: auto;
+}
+
+@keyframes flash {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.diagram-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.layout-select {
+
+  margin-top: 5em;
+  margin-left: 5em;
+
+  .padding {
+    display: inline-block;
+    width: 15em;
+  }
+
+}
+
+.system-summary, .log-roller {
+  position: absolute;
+  width: 20em;
+  height: 100%;
+  top: 0;
+  padding-top: 10em;
+}
+
+.system-summary {
+  left: 0;
+}
+
+.log-roller {
+  right: 0;
+}
+
+@media screen and (max-width: 1000px) {
+  .hidden-md {
+    display: none!important;
+  }
+}

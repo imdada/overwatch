@@ -1,0 +1,27 @@
+<div class="loading" *ngIf="systemStats === null">
+  <md-spinner></md-spinner>
+</div>
+<div class="diagram-wrapper" *ngIf="systemStats !== null">
+  <ow-graph-sys-rpc #diagram [data]="systemStats" [layout]="currentLayout" (systemSelected)="showDetail($event)"></ow-graph-sys-rpc>
+</div>
+
+<div class="system-summary hidden-md">
+  <ow-system-summary #systemSummary (systemSelected)="showDetail({ system: $event, eventType: 'stats' })"></ow-system-summary>
+</div>
+<div class="log-roller hidden-md">
+  <ow-failure-roller #failureRoller (systemSelected)="showDetail({ system: $event, eventType: 'stats' })"></ow-failure-roller>
+</div>
+
+<div class="layout-select">
+  <div class="padding hidden-md"></div>
+  <md-select placeholder="Layout" [(ngModel)]="selectedLayout" name="layout" [formControl]="layoutInputCtrl">
+    <md-option value="all">All</md-option>
+    <md-option *ngFor="let layout of layouts" [value]="layout">
+      {{ layout.name }}
+    </md-option>
+  </md-select>
+</div>
+
+<div class="overlay" [@detailState]="detailState" (@detailState.done)="animationDone($event)">
+  <ow-system-detail #systemDetail (exit)="hideDetail()"></ow-system-detail>
+</div>

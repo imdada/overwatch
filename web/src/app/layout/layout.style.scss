@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+}
+
+.ops-wrapper {
+  padding: 1em;
+  margin-top: 5em;
+  overflow: hidden;
+
+  &> div {
+    display: inline-block;
+    padding-left: 5em;
+  }
+
+}
+
+.full-width {
+  width: 100%;
+}

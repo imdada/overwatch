@@ -1,0 +1,14 @@
+<div class="main none-selectable">
+  <h1 class="title">Failure Log</h1>
+  <hr>
+  <div class="log-row"
+    (click)="onSystemSelected(row.failure.system)"
+    *ngFor="let row of failureRows; let i = index; trackBy: row?.id"
+    [@rowState]="row.state"
+  >
+    <div class="date">{{ row.failure.time | timestamp: 'time' }}</div>
+    <div class="system">{{ row.failure.system }}</div>
+    <div class="status">{{ row.failure.status }}</div>
+    <div class="count">{{ row.failure.count >= 1000 ? "999+" : row.failure.count }}</div>
+  </div>
+</div>

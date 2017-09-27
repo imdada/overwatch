@@ -1,0 +1,55 @@
+@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+@import '~font-awesome/css/font-awesome.css';
+
+@font-face {
+  font-family: 'Myriad Set Pro';
+  font-style: normal;
+  font-weight: 100;
+  src: url('assets/myriad-set-pro_ultralight.woff') format('woff');
+  /* Copyright (c) 1992 Adobe Systems Incorporated. All Rights Reserved. Myriad is a trademark of Adobe Systems Incorporated. */
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  color: white;
+  background-color: #282c34;
+  font-family: 'Myriad Set Pro';
+  font-style: normal;
+  font-weight: 100;
+  font-size: 16px;
+}
+
+ow-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.no-scroll-bar {
+  -ms-overflow-style: none;
+}
+.no-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+none-selectable {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}

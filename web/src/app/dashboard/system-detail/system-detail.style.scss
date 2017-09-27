@@ -1,0 +1,97 @@
+.main {
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .card {
+    flex: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 800px;
+    height: 80%;
+    padding: 3em;
+    background-color: rgba(40, 44, 52, 0.8);
+    border: 1px solid #aaa;
+    border-radius: 20px;
+    box-shadow: 0 0 15px #aaa;
+    font-family: Monaco, Consolas, "Courier new", monospace;
+
+    h1 {
+      font-family: 'Myriad Set Pro';
+      font-size: 2.5em;
+    }
+
+    hr {
+      clear: both;
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .system-info {
+      font-size: .8em;
+
+      dt {
+        display: inline-block;
+        float: left;
+        clear: left;
+        width: 10em;
+        line-height: 1.5em;
+        color: #aaa;
+      }
+
+      dd {
+        margin-left: 10em;
+        line-height: 1.5em;
+      }
+
+    }
+
+    .failure-log {
+      text-align: center;
+
+      h1 {
+        color: #aaa;
+        font-size: 2em;
+      }
+
+      .table-wrapper {
+
+        overflow-x: auto;
+
+        table {
+          width: 100%;
+          text-align: left;
+          font-size: .8em;
+
+          thead {
+            color: #aaa;
+            line-height: 1.5em;
+          }
+
+          td, th {
+            padding: .2em .5em;
+            white-space: nowrap;
+          }
+        }
+
+      }
+
+    }
+
+  }
+
+  .chart-wrapper {
+    $chart-height: 300px;
+    height: $chart-height;
+
+    .loading { text-align: center; }
+
+    &> div { height: $chart-height; }
+
+    ow-chart-rq-t { height: $chart-height; }
+
+  }
+}

@@ -1,0 +1,49 @@
+<div class="main" (click)="doExit()">
+  <div class="card no-scroll-bar" (click)="$event.stopPropagation()">
+    <h1>{{ systemName }}</h1>
+    <dl class="system-info">
+      <dt>Requests</dt>
+      <dd>{{ systemInfo.rpm | number:'1.0' }} rpm</dd>
+      <dt>Failures</dt>
+      <dd>{{ systemInfo.fpm | number:'1.0' }} rpm</dd>
+      <dt>Success Rate</dt>
+      <dd>{{ (systemInfo.rpm - systemInfo.fpm) / systemInfo.rpm | percent:'1.2-2' }}</dd>
+      <dt>Hosts</dt>
+      <dd>{{ systemInfo.hosts | join: ' ' }}</dd>
+    </dl>
+    <hr>
+    <div class="chart-wrapper">
+      <div class="loading" *ngIf="requestsData === null">Loading...</div>
+      <div class="loading" *ngIf="requestsData !== null && requestsData.length === 0">No Data</div>
+      <div *ngIf="requestsData !== null && requestsData.length > 0">
+        <ow-chart-rq-t #chart [data]="requestsData" height="300"></ow-chart-rq-t>
+      </div>
+    </div>
+    <hr>
+    <div class="failure-log">
+      <h1>Failure Log</h1>
+      <div *ngIf="logItems === null">Loading...</div>
+      <div *ngIf="logItems !== null && logItems.length === 0">No Data</div>
+      <div *ngIf="logItems !== null && logItems.length > 0" class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Host</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let logItem of logItems">
+              <td>{{ logItem.time | timestamp: 'time' }}</td>
+              <td>{{ logItem.status }}</td>
+              <td>{{ logItem.host }}</td>
+              <td>{{ logItem.url }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

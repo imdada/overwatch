@@ -1,0 +1,23 @@
+.main {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-items {
+
+  overflow: hidden;
+  padding-left: 2em;
+  padding-right: 2em;
+  margin: 0;
+
+  .menu-item {
+    float: left;
+    padding: 1em;
+
+    &.right { float: right; }
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+  }
+
+}
