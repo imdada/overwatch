@@ -22,7 +22,7 @@
     // domain name
     "corsDomain": "http://localhost:4200",
 
-    // see README.md#Submiting Statistics for detail
+    // see README.md#submiting-statistics
     // options: [ socket | redis ]
     "messaging": "socket",
 

@@ -1,6 +1,8 @@
 # Overwatch
 
-Overwatch is a general RPC monitoring system, utilizing D3 force layout as main diagram.
+Overwatch is a general RPC monitoring system, utilizing [D3](https://github.com/d3/d3) force layout as main diagram.
+
+See [demo here](http://overwatch.imdada.cn)
 
 ## Installation
 
@@ -29,17 +31,15 @@ $ npm start
 3. build & serve web content: under **web** run
 
 for testing: 
-    
 ```
 $ npm start
 ```
+then visit localhost:4200
 
 for production:
-
 ```
 $ npm run build
 ```
-
 then serve static directory **web/dist** with Nginx (or whatever)
 
 ---
@@ -54,7 +54,7 @@ Demo: [SocketIODemo.java](example/java/src/main/java/cn/imdada/overwatch/SocketI
 
 #### Send individual server stats via Redis pub/sub
 
-This is recommended for small systems to publish stats.
+This is recommended for small-scale systems to publish stats.
 
 Demo: [RedisDemo.java](example/java/src/main/java/cn/imdada/overwatch/RedisDemo.java)
 
