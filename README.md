@@ -1,8 +1,22 @@
 # Overwatch
 
-Overwatch is a general RPC monitoring system, utilizing [D3](https://github.com/d3/d3) force layout as main diagram.
-
 See [demo here](http://overwatch.imdada.cn)
+
+Overwatch is a general RPC monitoring system for distributed systems, utilizing [D3](https://github.com/d3/d3) force layout as main diagram.
+
+Overwatch provides an overview of the current state of the entire system, making it super easy for system administrators to understand the ongoing RPC events and pinpoint the source of failure in the system.
+
+Unlike common monitoring systems, a well-designed graph (with D3 force layout) is used to visualize data.
+
+![](https://imdada.github.io/overwatch/ss-01.png)
+
+- every circle represents a system
+- every line represents a dependency between two systems
+- rpm = requests per minute, fpm = failure per minute
+- circle size indicates rpm of the system
+- line dash density indicates rpm between two systems
+- circle color indicates the health of the system in the last 1 minute
+- two additional ring outside the circle inicates the health of the system in the past 5 minutes and 15 minutes
 
 ## Installation
 
