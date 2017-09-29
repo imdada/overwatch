@@ -20,9 +20,9 @@ Or use install.sh to build from source
 
 After proper installation, you have to
 
-1. modify config files **api/app/config.json** & **web/src/environments/environment.ts**
+1. modify config files **server/app/config.json** & **web/src/environments/environment.ts**
 
-2. start api server: under **api** run
+2. start server: under **server** run
 
 ```
 $ npm start

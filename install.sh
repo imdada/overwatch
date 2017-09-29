@@ -30,8 +30,8 @@ fi
 
 # npm install $NPM_ARGS -g typescript ts-node @angular/cli
 
-echo "installing api..."
-( cd api && npm $NPM_ARGS install )
+echo "installing server..."
+( cd server && npm $NPM_ARGS install )
 echo "done"
 
 echo "installing web..."
