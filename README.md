@@ -1,6 +1,6 @@
 # Overwatch
 
-See [demo here](http://overwatch.imdada.cn)
+See [demo here](http://overwatch.imdada.cn) | or [here](https://imdada.github.io/overwatch/)
 
 Overwatch is a general RPC monitoring system for distributed systems, utilizing [D3](https://github.com/d3/d3) force layout as main diagram.
 
