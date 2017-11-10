@@ -18,6 +18,9 @@ const appRoutes: Routes = [{
 }, {
     path: "layout",
     component: Layout
+}, {
+    path: "**",
+    redirectTo: "dashboard"
 }];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
