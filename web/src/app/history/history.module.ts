@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MdInputModule, MdAutocompleteModule, MdButtonModule,
-         MdNativeDateModule, MdDatepickerModule, MdProgressSpinnerModule } from "@angular/material";
+import { MatInputModule, MatAutocompleteModule, MatButtonModule,
+         MatNativeDateModule, MatDatepickerModule, MatProgressSpinnerModule } from "@angular/material";
 
 import { OverwatchCommonModule } from "../common/common.module";
 import { DiagramModule } from "../diagram/diagram.module";
@@ -14,7 +14,7 @@ import { SystemFailureService } from "../common/system-failure/system-failure.se
 @NgModule({
     imports: [
         CommonModule, FormsModule, ReactiveFormsModule,
-        MdInputModule, MdAutocompleteModule, MdButtonModule, MdNativeDateModule, MdDatepickerModule, MdProgressSpinnerModule,
+        MatInputModule, MatAutocompleteModule, MatButtonModule, MatNativeDateModule, MatDatepickerModule, MatProgressSpinnerModule,
         OverwatchCommonModule, DiagramModule
     ],
     declarations: [ History ],

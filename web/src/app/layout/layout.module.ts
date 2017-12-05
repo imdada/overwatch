@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MdInputModule, MdButtonModule, MdSelectModule, MdSnackBarModule, MdDialogModule } from "@angular/material";
+import { MatInputModule, MatButtonModule, MatSelectModule, MatSnackBarModule, MatDialogModule } from "@angular/material";
 
 import { OverwatchCommonModule } from "../common/common.module";
 import { DiagramModule } from "../diagram/diagram.module";
@@ -14,7 +14,7 @@ import { SystemFailureService } from "../common/system-failure/system-failure.se
 @NgModule({
     imports: [
         CommonModule, FormsModule, ReactiveFormsModule,
-        MdInputModule, MdButtonModule, MdSelectModule, MdSnackBarModule, MdDialogModule,
+        MatInputModule, MatButtonModule, MatSelectModule, MatSnackBarModule, MatDialogModule,
         OverwatchCommonModule, DiagramModule
     ],
     declarations: [ Layout, LayoutNameInputDialog ],

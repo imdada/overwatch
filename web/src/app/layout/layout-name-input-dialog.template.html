@@ -1,7 +1,7 @@
-<md-input-container>
-  <input mdInput placeholder="Layout Name" name="layoutName" [(ngModel)]="layoutName">
-</md-input-container>
+<mat-form-field>
+  <input matInput placeholder="Layout Name" name="layoutName" [(ngModel)]="layoutName">
+</mat-form-field>
 <div>
-  <button md-button (click)="cancel()">Cancel</button>
-  <button md-button (click)="confirm()">Confirm</button>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button (click)="confirm()">Confirm</button>
 </div>

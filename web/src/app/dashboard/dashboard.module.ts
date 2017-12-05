@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MdSelectModule, MdProgressSpinnerModule } from "@angular/material";
+import { MatSelectModule, MatProgressSpinnerModule } from "@angular/material";
 
 import { OverwatchCommonModule } from "../common/common.module";
 import { DiagramModule } from "../diagram/diagram.module";
@@ -15,7 +15,7 @@ import { SystemSummary } from "./system-summary/system-summary.component";
 import { FailureRoller } from "./failure-roller/failure-roller.component";
 
 @NgModule({
-    imports: [ CommonModule, FormsModule, ReactiveFormsModule, MdSelectModule, MdProgressSpinnerModule,
+    imports: [ CommonModule, FormsModule, ReactiveFormsModule, MatSelectModule, MatProgressSpinnerModule,
                OverwatchCommonModule, DiagramModule ],
     declarations: [ Dashboard, SystemDetail, SystemSummary, FailureRoller ],
     entryComponents: [ SystemDetail ],

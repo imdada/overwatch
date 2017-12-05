@@ -1,5 +1,5 @@
 <div class="loading" *ngIf="systemStats === null">
-  <md-spinner></md-spinner>
+  <mat-spinner></mat-spinner>
 </div>
 <div class="diagram-wrapper" *ngIf="systemStats !== null">
   <ow-graph-sys-rpc #diagram [data]="systemStats" [layout]="currentLayout" (systemSelected)="showDetail($event)"></ow-graph-sys-rpc>
@@ -14,12 +14,14 @@
 
 <div class="layout-select">
   <div class="padding hidden-md"></div>
-  <md-select placeholder="Layout" [(ngModel)]="selectedLayout" name="layout" [formControl]="layoutInputCtrl">
-    <md-option value="all">All</md-option>
-    <md-option *ngFor="let layout of layouts" [value]="layout">
-      {{ layout.name }}
-    </md-option>
-  </md-select>
+  <mat-form-field>
+    <mat-select placeholder="Layout" [(ngModel)]="selectedLayout" name="layout" [formControl]="layoutInputCtrl">
+      <mat-option value="all">All</mat-option>
+      <mat-option *ngFor="let layout of layouts" [value]="layout">
+        {{ layout.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <div class="overlay" [@detailState]="detailState" (@detailState.done)="animationDone($event)">

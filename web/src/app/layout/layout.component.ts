@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { MdSnackBar, MdDialog, MdDialogRef } from "@angular/material";
+import { MatSnackBar, MatDialog, MatDialogRef } from "@angular/material";
 import { LayoutEditor } from "../diagram/layout-editor/layout-editor.component";
 import { UserService } from "../common/user/user.service";
 import { SystemInfoService } from "../common/system-info/system-info.service";
@@ -25,8 +25,8 @@ export class Layout implements OnInit {
     @ViewChild("editor") private layoutEditor: LayoutEditor;
 
     constructor(
-        private snackBar: MdSnackBar,
-        private dialog: MdDialog,
+        private snackBar: MatSnackBar,
+        private dialog: MatDialog,
         private userService: UserService,
         private systemInfoService: SystemInfoService
     ) { }
@@ -142,7 +142,7 @@ export class LayoutNameInputDialog {
 
     private layoutName: string;
 
-    constructor(public dialogRef: MdDialogRef<LayoutNameInputDialog>) { }
+    constructor(public dialogRef: MatDialogRef<LayoutNameInputDialog>) { }
 
     cancel() {
         this.dialogRef.close();

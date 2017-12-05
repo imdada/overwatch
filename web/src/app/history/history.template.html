@@ -1,37 +1,37 @@
 <div class="main">
   <form action="javascript: void(0)">
 
-    <md-form-field>
-      <input mdInput placeholder="System" name="system"
-        [mdAutocomplete]="auto"
+    <mat-form-field>
+      <input matInput placeholder="System" name="system"
+        [matAutocomplete]="auto"
         [formControl]="systemInputCtrl"
         [(ngModel)]="chartOpt.system">
-    </md-form-field>
-    <md-autocomplete #auto="mdAutocomplete">
-      <md-option *ngFor="let system of filteredSystems" [value]="system">
+    </mat-form-field>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let system of filteredSystems" [value]="system">
         {{ system }}
-      </md-option>
-    </md-autocomplete>
+      </mat-option>
+    </mat-autocomplete>
 
-    <md-form-field>
-      <input mdInput placeholder="Begin" name="begin"
-        [mdDatepicker]="beginDatepicker"
+    <mat-form-field>
+      <input matInput placeholder="Begin" name="begin"
+        [matDatepicker]="beginDatepicker"
         [value]="chartOpt.begin"
         (dateChange)="beginDateChanged($event)">
-      <md-datepicker-toggle mdSuffix [for]="beginDatepicker"></md-datepicker-toggle>
-      <md-datepicker #beginDatepicker [startAt]="chartOpt.begin"></md-datepicker>
-    </md-form-field>
+      <mat-datepicker-toggle matSuffix [for]="beginDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #beginDatepicker [startAt]="chartOpt.begin"></mat-datepicker>
+    </mat-form-field>
 
-    <md-form-field>
-      <input mdInput placeholder="End" name="end"
-        [mdDatepicker]="endDatepicker"
+    <mat-form-field>
+      <input matInput placeholder="End" name="end"
+        [matDatepicker]="endDatepicker"
         [value]="chartOpt.end"
         (dateChange)="endDateChanged($event)">
-      <md-datepicker-toggle mdSuffix [for]="endDatepicker"></md-datepicker-toggle>
-      <md-datepicker #endDatepicker [startAt]="chartOpt.end"></md-datepicker>
-    </md-form-field>
+      <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #endDatepicker [startAt]="chartOpt.end"></mat-datepicker>
+    </mat-form-field>
 
-    <button md-raised-button (click)="go()" [disabled]="chartOpt.system.trim().length == 0">GO</button>
+    <button mat-raised-button (click)="go()" [disabled]="chartOpt.system.trim().length == 0">GO</button>
 
   </form>
 
@@ -41,7 +41,7 @@
       Select system &amp; time
     </div>
     <div *ngIf="chartState === 'loading'">
-      <md-spinner></md-spinner>
+      <mat-spinner></mat-spinner>
     </div>
     <div *ngIf="chartState === 'noData'">
       No Data

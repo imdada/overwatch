@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormControl } from "@angular/forms";
-import { MdDatepickerInputEvent } from "@angular/material";
+import { MatDatepickerInputEvent } from "@angular/material";
 import { RequestsDataItem } from "../diagram/requests-time-chart/data.vo";
 import { RequestsTimeChart } from "../diagram/requests-time-chart/chart.component";
 import { SystemInfoService } from "../common/system-info/system-info.service";
@@ -92,7 +92,7 @@ export class History implements OnInit {
         this.chartState = "shown";
     }
 
-    beginDateChanged(date: MdDatepickerInputEvent<Date>): void {
+    beginDateChanged(date: MatDatepickerInputEvent<Date>): void {
         let begin = date.value;
         begin.setHours(0);
         begin.setMinutes(0);
@@ -109,7 +109,7 @@ export class History implements OnInit {
         this.chartOpt.begin = begin;
     }
 
-    endDateChanged(date: MdDatepickerInputEvent<Date>): void {
+    endDateChanged(date: MatDatepickerInputEvent<Date>): void {
         let end = date.value;
         end.setHours(23);
         end.setMinutes(59);
