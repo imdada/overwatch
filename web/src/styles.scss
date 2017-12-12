@@ -31,11 +31,9 @@ ow-root {
   height: 100%;
 }
 
-.no-scroll-bar {
-  -ms-overflow-style: none;
-}
-.no-scroll-bar::-webkit-scrollbar {
-  display: none;
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
 }
 
 * {

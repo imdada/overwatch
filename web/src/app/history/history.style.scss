@@ -25,14 +25,11 @@
       height: $chart-height;
     }
 
-    mat-spinner {
-      margin: auto;
-      height: $chart-height;
-    }
-
     &>div {
-      text-align: center;
-      line-height: $chart-height;
+      height: $chart-height;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
   }
