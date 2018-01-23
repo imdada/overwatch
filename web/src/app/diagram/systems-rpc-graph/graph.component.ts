@@ -706,14 +706,17 @@ export class SystemsRpcGraph extends Diagram<SystemStats> implements OnChanges, 
             .attr("stroke-width", 2)
             .attr("stroke-linecap", "round")
             .attr("opacity", 0.8)
-            .attr("stroke-dasharray", (d) => {
-                let rpm: number = d.rpm[0];
-                if (rpm > 10000) rpm = 10000;
-                else if (rpm <= 0) rpm = 1;
-                let result: number = 22 - Math.log10(rpm) * 5;
-                return `2, ${ result }`;
-            })
             .style("animation", "lineFlow 40s linear infinite");
+    }
+
+    private updateLinkDetail(links: Selection<d3Selection.BaseType>): void {
+        links.attr("stroke-dasharray", (d) => {
+            let rpm: number = d.rpm[0];
+            if (rpm > 10000) rpm = 10000;
+            else if (rpm <= 0) rpm = 1;
+            let result: number = 22 - Math.log10(rpm) * 5;
+            return `2, ${ result }`;
+        });
     }
 
     onDrawDiagram() {
@@ -781,6 +784,7 @@ export class SystemsRpcGraph extends Diagram<SystemStats> implements OnChanges, 
         links.enter().append("line")
             .attr("class", "link")
             .call((l) => this.drawLinkDetail(l));
+        this.links.selectAll(".link").call((l) => this.updateLinkDetail(l));
 
         const dragEvents: (Selection) => void = d3Drag.drag()
             .on("start", (target: NodeVo) => {
