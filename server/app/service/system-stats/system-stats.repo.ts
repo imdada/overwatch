@@ -29,7 +29,7 @@ interface SystemStatsRepository {
 class SystemStatsRepositoryImpl implements SystemStatsRepository {
 
     private static readonly LOGGER = Log.getLogger("SystemStatsDao");
-    private static readonly MAX_STATS: number = 20;
+    private static readonly MAX_STATS: number = 15 * 60; // default 15 minutes max
 
     private statsTime: Array<number> = new Array<number>();
     private systemStatsMap: Map<number, SystemStats> = new Map<number, SystemStats>();
@@ -115,7 +115,7 @@ class SystemStatsRepositoryImpl implements SystemStatsRepository {
                 if (this.initialized === 0) return;
                 this.initialized = 0;
                 let now: number = Math.floor(new Date().getTime() / 1000);
-                let begin: number = now - 60 * SystemStatsRepositoryImpl.MAX_STATS;
+                let begin: number = now - SystemStatsRepositoryImpl.MAX_STATS;
                 this.systemInfoService.getAllSystemInfo(begin)
                 .then((systemInfos: Array<SystemInfoDto>) => {
                     SystemStatsRepositoryImpl.LOGGER.info("calculating system stats...");
@@ -156,7 +156,6 @@ class SystemStatsRepositoryImpl implements SystemStatsRepository {
     public saveSystemStats(systemStats: SystemStats): Promise<void> {
         return this.init().then(() => {
             let time = systemStats.time;
-            time -= time % 60;
             if (this.statsTime.findIndex((value, index, obj) => value === time) >= 0) {
                 let currentStats = this.systemStatsMap.get(time);
                 let mergedStats = this.mergeSystemStats(time, currentStats, systemStats);

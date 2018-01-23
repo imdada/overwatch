@@ -42,17 +42,14 @@ class SystemStatsServiceImpl implements SystemStatsService {
         return `${ source }-${ target }`;
     }
 
-    private calcDataAvg(data: Map<number, number>, begin: number, end: number): number {
+    private calcDataSum(data: Map<number, number>, begin: number, end: number): number {
         let sum = 0;
-        let count = 0;
-        for (let time = begin; time <= end; time += 60) {
+        for (let time = begin; time <= end; time ++) {
             if (data.has(time)) {
                 sum += data.get(time);
-                count++;
             }
         }
-        if (count === 0) return 0;
-        return parseFloat((sum / count).toFixed(3));
+        return sum;
     }
 
     public getSystemStats(): Promise<SystemStatsDto> {
@@ -104,7 +101,8 @@ class SystemStatsServiceImpl implements SystemStatsService {
                 let end: number = holder.get("time");
                 let begin: number = end - minutes * 60;
                 let data: Map<number, number> = nodeMap.get(node)[property];
-                return this.calcDataAvg(data, begin, end);
+                let sum = this.calcDataSum(data, begin, end);
+                return parseFloat((sum / minutes).toFixed(3));
             };
 
             let calcLinkAvg = (source: string, target: string, property: string, minutes: number): number => {
@@ -112,21 +110,38 @@ class SystemStatsServiceImpl implements SystemStatsService {
                 let begin: number = end - minutes * 60;
                 let key: string = this.getLinkKey(source, target);
                 let data: Map<number, number> = linkMap.get(key)[property];
-                return this.calcDataAvg(data, begin, end);
+                let sum = this.calcDataSum(data, begin, end);
+                return parseFloat((sum / minutes).toFixed(3));
             };
 
             for (let node of latestStats.nodes) {
                 let name: string = node.name;
-                let rpm: Array<number> = [ node.rpm, calcNodeAvg(name, "rpm", 5), calcNodeAvg(name, "rpm", 15) ];
-                let fpm: Array<number> = [ node.fpm, calcNodeAvg(name, "fpm", 5), calcNodeAvg(name, "fpm", 15) ];
+                let rpm: Array<number> = [
+                    calcNodeAvg(name, "rpm", 1),
+                    calcNodeAvg(name, "rpm", 5),
+                    calcNodeAvg(name, "rpm", 15)
+                ];
+                let fpm: Array<number> = [
+                    calcNodeAvg(name, "fpm", 1),
+                    calcNodeAvg(name, "fpm", 5),
+                    calcNodeAvg(name, "fpm", 15)
+                ];
                 result.nodes.push([ name, rpm, fpm ]);
             }
 
             for (let link of latestStats.links) {
                 let source: string = link.source;
                 let target: string = link.target;
-                let rpm: Array<number> = [ link.rpm, calcLinkAvg(source, target, "rpm", 5), calcLinkAvg(source, target, "rpm", 15) ];
-                let fpm: Array<number> = [ link.fpm, calcLinkAvg(source, target, "fpm", 5), calcLinkAvg(source, target, "fpm", 15) ];
+                let rpm: Array<number> = [
+                    calcLinkAvg(source, target, "rpm", 60),
+                    calcLinkAvg(source, target, "rpm", 5 * 60),
+                    calcLinkAvg(source, target, "rpm", 15 * 60)
+                ];
+                let fpm: Array<number> = [
+                    calcLinkAvg(source, target, "fpm", 60),
+                    calcLinkAvg(source, target, "fpm", 5 * 60),
+                    calcLinkAvg(source, target, "fpm", 15 * 60)
+                ];
                 result.links.push([ source, target, rpm, fpm ]);
             }
 
