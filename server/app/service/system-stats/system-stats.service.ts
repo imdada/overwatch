@@ -95,7 +95,6 @@ class SystemStatsServiceImpl implements SystemStatsService {
                     linkMap.get(key)["fpm"].set(time, link.fpm);
                 }
             });
-            let latestStats: SystemStats = stats[0];
 
             let calcNodeAvg = (node: string, property: string, minutes: number): number => {
                 let end: number = holder.get("time");
@@ -114,24 +113,24 @@ class SystemStatsServiceImpl implements SystemStatsService {
                 return parseFloat((sum / minutes).toFixed(3));
             };
 
-            for (let node of latestStats.nodes) {
-                let name: string = node.name;
+            for (let node of nodeMap.keys()) {
                 let rpm: Array<number> = [
-                    calcNodeAvg(name, "rpm", 1),
-                    calcNodeAvg(name, "rpm", 5),
-                    calcNodeAvg(name, "rpm", 15)
+                    calcNodeAvg(node, "rpm", 1),
+                    calcNodeAvg(node, "rpm", 5),
+                    calcNodeAvg(node, "rpm", 15)
                 ];
                 let fpm: Array<number> = [
-                    calcNodeAvg(name, "fpm", 1),
-                    calcNodeAvg(name, "fpm", 5),
-                    calcNodeAvg(name, "fpm", 15)
+                    calcNodeAvg(node, "fpm", 1),
+                    calcNodeAvg(node, "fpm", 5),
+                    calcNodeAvg(node, "fpm", 15)
                 ];
-                result.nodes.push([ name, rpm, fpm ]);
+                result.nodes.push([ node, rpm, fpm ]);
             }
 
-            for (let link of latestStats.links) {
-                let source: string = link.source;
-                let target: string = link.target;
+            for (let link of linkMap.keys()) {
+                const parts = link.split("-");
+                let source: string = parts[0];
+                let target: string = parts[1];
                 let rpm: Array<number> = [
                     calcLinkAvg(source, target, "rpm", 60),
                     calcLinkAvg(source, target, "rpm", 5 * 60),
