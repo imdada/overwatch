@@ -19,11 +19,6 @@ export class SystemFailureService {
         let url = "/failure";
         if (opt.system) url = `${ url }/${ opt.system }`;
         opt.system = undefined;
-        if (opt.count === undefined) opt.count = 20;
-        else {
-            if (opt.count < 1) opt.count = 1;
-            if (opt.count > 100) opt.count = 100;
-        }
         return this.connector.get<Array<SystemFailureDto>>(url, opt);
     }
 
