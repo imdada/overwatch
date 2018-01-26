@@ -702,21 +702,21 @@ export class SystemsRpcGraph extends Diagram<SystemStats> implements OnChanges, 
     }
 
     private drawLinkDetail(links: Selection<d3Selection.BaseType>): void {
-        links.attr("stroke", this.healthColor(0))
-            .attr("stroke-width", 2)
+        links.attr("stroke-width", 2)
             .attr("stroke-linecap", "round")
             .attr("opacity", 0.8)
             .style("animation", "lineFlow 40s linear infinite");
     }
 
     private updateLinkDetail(links: Selection<d3Selection.BaseType>): void {
-        links.attr("stroke-dasharray", (d) => {
-            let rpm: number = d.rpm[0];
-            if (rpm > 10000) rpm = 10000;
-            else if (rpm <= 0) rpm = 1;
-            let result: number = 22 - Math.log10(rpm) * 5;
-            return `2, ${ result }`;
-        });
+        links.attr("stroke", this.healthColor(0))
+            .attr("stroke-dasharray", (d) => {
+                let rpm: number = d.rpm[0];
+                if (rpm > 10000) rpm = 10000;
+                else if (rpm <= 0) rpm = 1;
+                let result: number = 22 - Math.log10(rpm) * 5;
+                return `2, ${ result }`;
+            });
     }
 
     onDrawDiagram() {
