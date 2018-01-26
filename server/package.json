@@ -1,7 +1,7 @@
 {
-  "name": "overwatch-api",
+  "name": "overwatch-server",
   "version": "0.0.1",
-  "description": "overwatch api",
+  "description": "overwatch server",
   "main": "server.js",
   "author": "zstringx",
   "license": "BSD-3-Clause",
