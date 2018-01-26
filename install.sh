@@ -2,7 +2,7 @@
 
 read -p "GFW? (Y/n)" yn
 case $yn in
-    [Yy]* | "" ) NPM_ARGS="--registry=https://registry.npm.taobao.org";export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/dist;;
+    [Yy]* | "" ) NPM_ARGS="--registry=https://registry.npm.taobao.org";export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/dist;export SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass;;
     [Nn]* ) NPM_ARGS="";;
 esac
 
