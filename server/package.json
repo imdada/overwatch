@@ -1,7 +1,7 @@
 {
-  "name": "overwatch-api",
+  "name": "overwatch-server",
   "version": "0.0.1",
-  "description": "overwatch api",
+  "description": "overwatch server",
   "main": "server.js",
   "author": "zstringx",
   "license": "BSD-3-Clause",
@@ -12,7 +12,6 @@
     "@types/body-parser": "^1.16.5",
     "@types/cors": "^2.8.1",
     "@types/express": "^4.0.37",
-    "@types/log4js": "0.0.33",
     "@types/node": "^6.0.88",
     "@types/redis": "^2.6.0",
     "@types/sequelize": "^4.0.73",
@@ -30,9 +29,9 @@
     "reflect-metadata": "^0.1.10",
     "sequelize": "^4.8.2",
     "socket.io": "^2.0.3",
-    "uuid": "^3.1.0",
-    "yargs": "^8.0.2",
     "ts-node": "~3.2.0",
-    "typescript": "~2.3.3"
+    "typescript": "~2.3.3",
+    "uuid": "^3.1.0",
+    "yargs": "^8.0.2"
   }
 }
