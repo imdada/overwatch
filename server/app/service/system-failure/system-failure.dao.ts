@@ -17,7 +17,7 @@ class SystemFailureDaoImpl extends BaseDao<SystemFailureInstance, SystemFailureA
     }
 
     public getSystemFailure(system?: string, begin?: number, end?: number, limit?: number): Promise<Array<SystemFailureInstance>> {
-        limit = limit || 20;
+        limit = limit || 1000;
         if (limit < 0) limit = 1;
         let searchParam: any = {
             where: { },

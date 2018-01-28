@@ -31,10 +31,10 @@ class SystemFailureControllerImpl implements SystemFailureController {
     ) {
         this.socket = socket;
         this.systemFailureService = systemFailureService;
-        eventSource.listen<SystemFailureDto>("submit_failure", this.saveSystemFailure);
+        eventSource.listen<SystemFailureDto>("submit_failure", this._saveSystemFailure);
     }
 
-    private saveSystemFailure = (systemFailure: SystemFailureDto): void => {
+    private _saveSystemFailure = (systemFailure: SystemFailureDto): void => {
         // TODO: batch save & rate limit
         systemFailure.id = undefined;
         this.systemFailureService.saveSystemFailure([ systemFailure ]);
@@ -45,14 +45,20 @@ class SystemFailureControllerImpl implements SystemFailureController {
         let router = express.Router();
         router.get("", this.getLatestSystemFailure);
         router.get("/:system", this.getSystemFailure);
+        router.post("/", this.saveSystemFailure);
         return router;
     }
 
+    private saveSystemFailure = (req: express.Request, res: express.Response, next: Function) => {
+        let systemFailure: SystemFailureDto = req.body;
+        this._saveSystemFailure(systemFailure);
+        ResponseWriter.success(res);
+    }
+
     private getLatestSystemFailure = (req: express.Request, res: express.Response, next: Function) => {
-        let count = parseInt(req.query.count) || 20;
-        count = count < 100 ? count : 100;
+        let count = parseInt(req.query.count) || undefined;
         let begin = req.query.begin || Math.round(new Date().getTime() / 1000) - 3 * 60 * 60;
-        this.systemFailureService.getSystemFailure(undefined, begin, count)
+        this.systemFailureService.getSystemFailure(undefined, begin, undefined, count)
         .then((systemFailures) => {
             ResponseWriter.success(res, systemFailures);
         })

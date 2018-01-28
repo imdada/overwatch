@@ -91,7 +91,7 @@ export class Dashboard implements OnInit, OnDestroy {
         });
 
         // load system failures
-        this.systemFailureService.getSystemFailure({ count: 20 })
+        this.systemFailureService.getSystemFailure({ })
         .then((systemFailures) => systemFailures.map(this.failureRoller.addLogItem));
 
         this.socketService.subscribe(this.socketService.getSystemFailureTopic(), this.failureRoller.addLogItem);
