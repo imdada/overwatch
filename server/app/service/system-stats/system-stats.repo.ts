@@ -29,7 +29,7 @@ interface SystemStatsRepository {
 class SystemStatsRepositoryImpl implements SystemStatsRepository {
 
     private static readonly LOGGER = Log.getLogger("SystemStatsDao");
-    private static readonly MAX_STATS: number = 20;
+    private static readonly MAX_STATS: number = 15 * 60; // default 15 minutes max
 
     private statsTime: Array<number> = new Array<number>();
     private systemStatsMap: Map<number, SystemStats> = new Map<number, SystemStats>();
@@ -115,7 +115,7 @@ class SystemStatsRepositoryImpl implements SystemStatsRepository {
                 if (this.initialized === 0) return;
                 this.initialized = 0;
                 let now: number = Math.floor(new Date().getTime() / 1000);
-                let begin: number = now - 60 * SystemStatsRepositoryImpl.MAX_STATS;
+                let begin: number = now - SystemStatsRepositoryImpl.MAX_STATS;
                 this.systemInfoService.getAllSystemInfo(begin)
                 .then((systemInfos: Array<SystemInfoDto>) => {
                     SystemStatsRepositoryImpl.LOGGER.info("calculating system stats...");
@@ -156,14 +156,77 @@ class SystemStatsRepositoryImpl implements SystemStatsRepository {
     public saveSystemStats(systemStats: SystemStats): Promise<void> {
         return this.init().then(() => {
             let time = systemStats.time;
-            this.statsTime.unshift(time);
-            this.statsTime.sort().reverse();
-            while (this.statsTime.length > SystemStatsRepositoryImpl.MAX_STATS) {
-                let deletedTime = this.statsTime.pop();
-                this.systemStatsMap.delete(deletedTime);
+            if (this.statsTime.findIndex((value, index, obj) => value === time) >= 0) {
+                let currentStats = this.systemStatsMap.get(time);
+                let mergedStats = this.mergeSystemStats(time, currentStats, systemStats);
+                this.systemStatsMap.set(time, mergedStats);
+            } else {
+                this.statsTime.unshift(time);
+                this.statsTime.sort().reverse();
+                while (this.statsTime.length > SystemStatsRepositoryImpl.MAX_STATS) {
+                    let deletedTime = this.statsTime.pop();
+                    this.systemStatsMap.delete(deletedTime);
+                }
+                this.systemStatsMap.set(time, systemStats);
             }
-            this.systemStatsMap.set(time, systemStats);
         });
+    }
+
+    private mergeSystemStats(time: number, currentStats: SystemStats, newStats: SystemStats): SystemStats {
+
+        let nodeMap: Map<string, SystemStatsNode> = new Map<string, SystemStatsNode>();
+        currentStats.nodes.forEach((node) => nodeMap.set(node.name, {
+            name: node.name,
+            rpm: node.rpm,
+            fpm: node.fpm
+        }));
+        newStats.nodes.forEach((node) => {
+            if (nodeMap.has(node.name)) {
+                let nodeStats: SystemStatsNode = nodeMap.get(node.name);
+                nodeStats.rpm += node.rpm;
+                nodeStats.fpm += node.fpm;
+            } else {
+                nodeMap.set(node.name, {
+                    name: node.name,
+                    rpm: node.rpm,
+                    fpm: node.fpm
+                });
+            }
+        });
+
+        let linkMap: Map<string, SystemStatsLink> = new Map<string, SystemStatsLink>();
+        currentStats.links.forEach((link) => linkMap.set(this.getLinkKey(link.source, link.target), {
+            source: link.source,
+            target: link.target,
+            rpm: link.rpm,
+            fpm: link.fpm
+        }));
+        newStats.links.forEach((link) => {
+            let key = this.getLinkKey(link.source, link.target);
+            if (linkMap.has(key)) {
+                let linkStats: SystemStatsLink = linkMap.get(key);
+                linkStats.rpm += link.rpm;
+                linkStats.fpm += link.fpm;
+            } else {
+                linkMap.set(key, {
+                    source: link.source,
+                    target: link.target,
+                    rpm: link.rpm,
+                    fpm: link.fpm
+                });
+            }
+        });
+
+        let result: SystemStats = {
+            time: time,
+            nodes: new Array<SystemStatsNode>(),
+            links: new Array<SystemStatsLink>()
+        };
+
+        nodeMap.forEach((stats, node) => result.nodes.push(stats));
+        linkMap.forEach((stats, link) => result.links.push(stats));
+
+        return result;
     }
 
 }

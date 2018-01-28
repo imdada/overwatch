@@ -39,20 +39,22 @@ class SystemStatsServiceImpl implements SystemStatsService {
     ) { }
 
     private getLinkKey(source: string, target: string): string {
-        return `${ source }-${ target }`;
+        return `${ Buffer.from(source).toString("base64") }-${ Buffer.from(target).toString("base64") }`;
     }
 
-    private calcDataAvg(data: Map<number, number>, begin: number, end: number): number {
+    private fromLinkKey(key: string): Array<string> {
+        const parts = key.split("-");
+        return [ Buffer.from(parts[0], "base64").toString("utf8"), Buffer.from(parts[1], "base64").toString("utf8") ];
+    }
+
+    private calcDataSum(data: Map<number, number>, begin: number, end: number): number {
         let sum = 0;
-        let count = 0;
-        for (let time = begin; time <= end; time += 60) {
+        for (let time = begin; time <= end; time ++) {
             if (data.has(time)) {
                 sum += data.get(time);
-                count++;
             }
         }
-        if (count === 0) return 0;
-        return parseFloat((sum / count).toFixed(3));
+        return sum;
     }
 
     public getSystemStats(): Promise<SystemStatsDto> {
@@ -98,35 +100,51 @@ class SystemStatsServiceImpl implements SystemStatsService {
                     linkMap.get(key)["fpm"].set(time, link.fpm);
                 }
             });
-            let latestStats: SystemStats = stats[0];
 
             let calcNodeAvg = (node: string, property: string, minutes: number): number => {
                 let end: number = holder.get("time");
                 let begin: number = end - minutes * 60;
                 let data: Map<number, number> = nodeMap.get(node)[property];
-                return this.calcDataAvg(data, begin, end);
+                let sum = this.calcDataSum(data, begin, end);
+                return parseFloat((sum / minutes).toFixed(3));
             };
 
-            let calcLinkAvg = (source: string, target: string, property: string, minutes: number): number => {
+            let calcLinkAvg = (link: string, property: string, minutes: number): number => {
                 let end: number = holder.get("time");
                 let begin: number = end - minutes * 60;
-                let key: string = this.getLinkKey(source, target);
-                let data: Map<number, number> = linkMap.get(key)[property];
-                return this.calcDataAvg(data, begin, end);
+                let data: Map<number, number> = linkMap.get(link)[property];
+                let sum = this.calcDataSum(data, begin, end);
+                return parseFloat((sum / minutes).toFixed(3));
             };
 
-            for (let node of latestStats.nodes) {
-                let name: string = node.name;
-                let rpm: Array<number> = [ node.rpm, calcNodeAvg(name, "rpm", 5), calcNodeAvg(name, "rpm", 15) ];
-                let fpm: Array<number> = [ node.fpm, calcNodeAvg(name, "fpm", 5), calcNodeAvg(name, "fpm", 15) ];
-                result.nodes.push([ name, rpm, fpm ]);
+            for (let node of nodeMap.keys()) {
+                let rpm: Array<number> = [
+                    calcNodeAvg(node, "rpm", 1),
+                    calcNodeAvg(node, "rpm", 5),
+                    calcNodeAvg(node, "rpm", 15)
+                ];
+                let fpm: Array<number> = [
+                    calcNodeAvg(node, "fpm", 1),
+                    calcNodeAvg(node, "fpm", 5),
+                    calcNodeAvg(node, "fpm", 15)
+                ];
+                result.nodes.push([ node, rpm, fpm ]);
             }
 
-            for (let link of latestStats.links) {
-                let source: string = link.source;
-                let target: string = link.target;
-                let rpm: Array<number> = [ link.rpm, calcLinkAvg(source, target, "rpm", 5), calcLinkAvg(source, target, "rpm", 15) ];
-                let fpm: Array<number> = [ link.fpm, calcLinkAvg(source, target, "fpm", 5), calcLinkAvg(source, target, "fpm", 15) ];
+            for (let link of linkMap.keys()) {
+                let rpm: Array<number> = [
+                    calcLinkAvg(link, "rpm", 60),
+                    calcLinkAvg(link, "rpm", 5 * 60),
+                    calcLinkAvg(link, "rpm", 15 * 60)
+                ];
+                let fpm: Array<number> = [
+                    calcLinkAvg(link, "fpm", 60),
+                    calcLinkAvg(link, "fpm", 5 * 60),
+                    calcLinkAvg(link, "fpm", 15 * 60)
+                ];
+                const parts = this.fromLinkKey(link);
+                let source: string = parts[0];
+                let target: string = parts[1];
                 result.links.push([ source, target, rpm, fpm ]);
             }
 
