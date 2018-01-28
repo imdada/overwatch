@@ -1,4 +1,4 @@
-host=localhost:3000
+host=127.0.0.1:3000
 system=`uname`
 if [ $system = Darwin ]
 then
