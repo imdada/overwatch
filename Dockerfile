@@ -12,7 +12,7 @@
 #
 
 FROM node:boron-slim
-MAINTAINER ZstringX <thomas931225@126.com>
+MAINTAINER lidian <mail@imlidian.com>
 WORKDIR /root
 
 # install packages
